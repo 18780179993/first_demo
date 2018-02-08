@@ -1,0 +1,12 @@
+spring: 
+  datasources:  
+      - datasource_name: DEFAULT
+        url: jdbc:mysql://localhost:3306/db1?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: rooe
+        password: 123456
+        driver-class-name: com.mysql.jdbc.Driver
+      - datasource_name: DB2
+        url: jdbc:mysql://localhost:3306/db2?useSSL=false&useUnicode=true&characterEncoding=utf-8
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.jdbc.Driver
