@@ -1,4 +1,4 @@
-package com.example.dynamic.datasource.config;
+package com.example.config.dynamic.datasource;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,36 +41,18 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
 	@Override
 	public void setEnvironment(Environment environment) {
 		System.out.println("DynamicDataSourceRegister.setEnvironment()");
-//		initDefaultDataSource(environment);
 		initCustomDataSources(environment);
 	}
 
 	/**
-	 * 加载主数据源配置.
-	 * @param env
-	 */
-//	private void initDefaultDataSource(Environment env) {
-//		// 读取主数据源
-//		RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(env, "spring.datasource.");
-//		Map<String, String> dsMap = new HashMap<String, String>();
-//		dsMap.put("type", propertyResolver.getProperty("type"));
-//		dsMap.put("driverClassName", propertyResolver.getProperty("driverClassName"));
-//		dsMap.put("url", propertyResolver.getProperty("url"));
-//		dsMap.put("username", propertyResolver.getProperty("username"));
-//		dsMap.put("password", propertyResolver.getProperty("password"));
-//		// 创建数据源;
-//		defaultDataSource = buildDataSource(dsMap);
-//		dataBinder(defaultDataSource, env);
-//	}
-
-	/**
-	 * 初始化更多数据源
+	 * 初始化数据源
 	 * @author SHANHY
 	 * @create 2016年1月24日
 	 */
 	private void initCustomDataSources(Environment env) {
 		RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(env, "spring.");
 		Map<String, Object> dspropers=propertyResolver.getSubProperties("datasources");
+		// 读取配置文件获取数据源信息存放到map<数据源序号,map<数据源信息名称，数据源信息值>> 里面
 		Map<String, Map<String,String>> infos=new HashMap<>();
 		for (String s : dspropers.keySet()) {
 			String index=s.substring(0,s.indexOf('.'));
@@ -80,14 +62,15 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
 			String key=s.substring(s.indexOf('.')+1);
 			infos.get(index).put(key, dspropers.get(s).toString());
 		}
-		// 读取配置文件获取更多数据源，也可以通过defaultDataSource读取数据库获取更多数据源
+		// 生成成数据源
 		for (Map<String, String> dsInfo : infos.values()) {
 			try {
 				DataSource ds = buildDataSource(dsInfo);
-				if(dsInfo.get("datasource_name").toUpperCase().equals("DEFAULT")) {
+				String dsName=dsInfo.get("datasource_name").toUpperCase();
+				if(dsName.equals("DEFAULT")) {
 					defaultDataSource = ds;
 				}else {
-					customDataSources.put(dsInfo.get("datasource_name"), ds);
+					customDataSources.put(dsName, ds);
 				}
 				dataBinder(ds, env);
 			}catch (Exception e) {

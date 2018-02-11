@@ -1,4 +1,4 @@
-package com.example.dynamic.datasource.config;
+package com.example.config.dynamic.datasource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

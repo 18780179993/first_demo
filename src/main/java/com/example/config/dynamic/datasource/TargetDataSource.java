@@ -1,4 +1,4 @@
-package com.example.dynamic.datasource.config;
+package com.example.config.dynamic.datasource;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

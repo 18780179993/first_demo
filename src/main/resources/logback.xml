@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<property name="USER_HOME" value="/logs" />
+	<property scope="context" name="FILE_NAME" value="mylog-logback" />
+	<timestamp key="byDay" datePattern="yyyy-MM-dd" />
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+              <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度   %msg：日志消息，%n是换行符
+                    级别分别是：TRACE < DEBUG < INFO <WARN < ERROR
+              -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n </pattern>
+        </encoder>
+    </appender>
+    
+   <!--   <appender name="log_file"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${USER_HOME}/${FILE_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${USER_HOME}/${byDay}/${FILE_NAME}-${byDay}-%i.log</fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy   class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-4relative [%thread] %-5level %logger{35} - %msg%n
+            </pattern>
+        </encoder>
+    </appender> -->
+    <!-- spring映射相关日志 -->
+    <logger name="org.springframework.web.servlet.mvc.method.annotation" level="DEBUG" additivity="true">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    
+    <!-- 项目内部日志 -->
+    <logger name="com.example.**" level="TRACE" additivity="true">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    
+    <!--  <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="log_file" />
+    </root> -->
+</configuration>
