@@ -77,6 +77,9 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
 				e.printStackTrace();
 			}
 		}
+		if(defaultDataSource==null) {
+			throw new RuntimeException("必须存在一个datasource_name=DEFAULT的数据源");
+		}
 	}
 
 	/**

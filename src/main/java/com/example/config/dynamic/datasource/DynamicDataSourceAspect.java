@@ -26,6 +26,7 @@ public class DynamicDataSourceAspect {
         //如果不在我们注入的所有的数据源范围之内，那么输出警告信息，系统自动使用默认的数据源。
         if (!DataSourceContextHolder.containsDataSource(dsId)) {
             System.err.println("数据源["+targetDataSource.value()+"]不存在，使用默认数据源 > "+point.getSignature());
+            DataSourceContextHolder.setDataSourceType("DEFAULT");
         } else {
             System.out.println("Use DataSource : {} > {}"+targetDataSource.value()+point.getSignature());
             //找到的话，那么设置到动态数据源上下文中。
@@ -39,12 +40,6 @@ public class DynamicDataSourceAspect {
         DataSourceContextHolder.clearDataSourceType();
     }
     
-    @Before("@annotation(EnabledDynamicDataSource)")
-    public void test() {
-    	
-    	new DynamicDataSourceAspect();
-    	
-    }
     
 }
 
