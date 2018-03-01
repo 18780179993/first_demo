@@ -28,7 +28,7 @@ public class DynamicDataSourceAspect {
             System.err.println("数据源["+targetDataSource.value()+"]不存在，使用默认数据源 > "+point.getSignature());
             DataSourceContextHolder.setDataSourceType("DEFAULT");
         } else {
-            System.out.println("Use DataSource : {} > {}"+targetDataSource.value()+point.getSignature());
+            System.out.println("Use DataSource : {"+targetDataSource.value()+"} > {"+point.getSignature()+"}");
             //找到的话，那么设置到动态数据源上下文中。
             DataSourceContextHolder.setDataSourceType(targetDataSource.value());
         }

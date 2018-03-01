@@ -17,9 +17,7 @@ public class ServiceTest {
 		
 		A a=new A();
 		a.setNumb(1);
-		serviceTest.db1(a);
-		
-		serviceTest.db2(a);
+		serviceTest.use2db(a);
 	}
 
 
