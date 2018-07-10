@@ -31,4 +31,5 @@ public class InsertService {
 		mapper.insert(a);
 		
 	}
+	
 }
